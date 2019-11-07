@@ -37,6 +37,13 @@ footer p {
     color: #9b59b6;
     text-align: justify;
 }
+
+.sign-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .first-name,
 .last-name {
     width: 150px;
@@ -66,7 +73,7 @@ canvas {
 }
 
 .hidden-field {
-    visibility: hidden;
+    /* visibility: hidden; */
     width: 1px;
     height: 1px;
 }
@@ -81,4 +88,35 @@ canvas {
     outline: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* thankyou.handlebars file */
+.thankyou-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.thankyou-page h1 {
+    color: #9b59b6;
+    margin-bottom: 30px;
+}
+
+.thankyou-page a {
+    color: #9b59b6;
+    text-decoration: none;
+}
+
+/* signerslist.handlebars file */
+
+.signers-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signers-list h3 {
+    color: #9b59b6;
 }

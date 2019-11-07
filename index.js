@@ -10,28 +10,54 @@ app.set("view engine", "handlebars");
 // middleware that will run with any single route
 app.use(express.static("./public"));
 
+// routes
 app.get("/petition", (req, res) => {
     res.render("petition", {
         layout: "main"
     });
 });
 
-// When users submit the form, a POST request should be made to your server and the
-//  submitted data should be inserted into a database table named signatures.
-//  This table needs to have columns for id (the primary key), first name, last name,
-//  and signature. It is probably also a good idea to have a timestamp column to record
-//   when the signature took place. Note that the data url from the canvas can be quit
-//   e large so the TEXT data type should be used for it.
-
-app.post("/add-city", (req, res) => {
-    db.addCity("Sarajevo", 700000)
-        .then(() => {
-            console.log("success!");
+app.post("/petition", (req, res) => {
+    db.addSignature()
+        .then(signature => {
+            console.log("success!", signature);
         })
         .catch(err => {
-            console.log("add-city err:", err);
+            console.log("add-signature err: ", err);
         });
 });
+
+app.get("/signed", (req, res) => {
+    db.getSignature()
+        .then(() => {
+            console.log("petition signed successfully!");
+        })
+        .catch(err => {
+            console.log("/signed err: ", err);
+        });
+});
+
+app.get("/thank-you", (req, res) => {
+    res.render("thankyou", {
+        layout: "main"
+    });
+});
+
+app.get("/signers-list", (req, res) => {
+    res.render("signerslist", {
+        layout: "main"
+    });
+});
+
+// app.post("/add-city", (req, res) => {
+//     db.addCity("Sarajevo", 700000)
+//         .then(() => {
+//             console.log("success!");
+//         })
+//         .catch(err => {
+//             console.log("add-city err:", err);
+//         });
+// });
 
 // app.get("/cities", (req, res) => {
 //     db.getCities()
@@ -47,13 +73,4 @@ app.post("/add-city", (req, res) => {
 //         });
 // });
 
-// app.get();
-
-app.get("/petition", (req, res) => {
-    res.send("<h1>petition!</h1>");
-});
-
 app.listen(8080, () => console.log("Listening!"));
-
-// hidden field for the canvas
-// toDataURL method of the canvas
