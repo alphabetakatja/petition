@@ -1,5 +1,84 @@
-/* petition.handlebars file  */
+/* MAIN HANDLEBARS file */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: 110px 1fr 40px;
+    font-family: "Antic Slab", serif;
+    background-color: #34314f;
+}
+
+footer p {
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #9b59b6;
+}
+
+/* petition.handlebars file  */
+.petition-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.petition-container h1 {
+    color: #9b59b6;
+    margin-bottom: 30px;
+}
+
+.petition-container p {
+    color: #9b59b6;
+    text-align: justify;
+}
+.first-name,
+.last-name {
+    width: 150px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #9b59b6;
+    background: white;
+    outline: none;
+    transition: border-color 0.5s;
+    cursor: text;
+}
+
+.first-name {
+}
+
+.last-name {
+}
 canvas {
-    border: 2px solid black;
+    border-radius: 5px;
+    border: 2px solid #9b59b6;
+    background: white;
+    outline: none;
+    transition: border-color 0.5s;
+    margin-bottom: 20px;
+}
+
+.hidden-field {
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+.submit-btn {
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background: #9b59b6;
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

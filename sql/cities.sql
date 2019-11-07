@@ -1,5 +1,3 @@
--- this is for demo purposes!
-
 CREATE TABLE cities (
     id SERIAL primary key,
     city VARCHAR(255) NOT NULL,

@@ -1,13 +1,32 @@
 <div class="petition-container">
     <h1>Welcome to my petition Page!</h1>
-    <input class="first-name" type="text" name="" value="">
-    <input class="last-name" type="text" name="" value="">
+    <p>If you wanna save the world with just one signature you are on the right place!</p>
+    <input
+                class="first-name"
+                type="text"
+                name="first-name"
+                placeholder="First Name"
+                required
+                minlength="3"
+                maxlength="15"
+                pattern="[a-zA-Z0-9]+"
+            />
+            <input
+                        class="last-name"
+                        type="text"
+                        name="last-name"
+                        placeholder="Last Name"
+                        required
+                        minlength="3"
+                        maxlength="15"
+                        pattern="[a-zA-Z0-9]+"
+                    />
     <br>
 
     <input class="hidden-field" type="text" name="" value="">
     <canvas id="signature-field" width="500" height="100"></canvas>
 
-    <button class="submit-btn" type="button" name="button"></button>
+    <button class="submit-btn" type="button" name="button">Submit</button>
 
 
 </div>
