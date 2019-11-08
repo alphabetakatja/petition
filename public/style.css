@@ -1,4 +1,7 @@
-/* MAIN HANDLEBARS file */
+/*****   MAIN HANDLEBARS FILE   *****/
+/* ---------------------------------- */
+/* BASIC SETUP */
+/* ---------------------------------- */
 
 * {
     margin: 0;
@@ -12,6 +15,13 @@ body {
     grid-template-rows: 110px 1fr 40px;
     font-family: "Antic Slab", serif;
     background-color: #34314f;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
+        url(thedude2.jpg_large);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    background-attachment: fixed;
+    color: color: #9b59b6;
 }
 
 footer p {
@@ -20,7 +30,7 @@ footer p {
     color: #9b59b6;
 }
 
-/* petition.handlebars file  */
+/*****  PETITION.HANDLEBARS FILE  *****/
 .petition-container {
     display: flex;
     flex-direction: column;
@@ -36,6 +46,19 @@ footer p {
 .petition-container p {
     color: #9b59b6;
     text-align: justify;
+}
+
+.petition-text p {
+    font-size: 22px;
+    text-align: justify;
+    width: 600px;
+    margin-bottom: 35px;
+}
+
+.petition-text h3 {
+    color: #9b59b6;
+    font-size: 30px;
+    text-align: center;
 }
 
 .sign-form {
@@ -58,11 +81,6 @@ footer p {
     cursor: text;
 }
 
-.first-name {
-}
-
-.last-name {
-}
 canvas {
     border-radius: 5px;
     border: 2px solid #9b59b6;
@@ -73,7 +91,6 @@ canvas {
 }
 
 .hidden-field {
-    /* visibility: hidden; */
     width: 1px;
     height: 1px;
 }
@@ -90,7 +107,7 @@ canvas {
     cursor: pointer;
 }
 
-/* thankyou.handlebars file */
+/***** THANKYOU.HANDLEBARS FILE *****/
 .thankyou-page {
     display: flex;
     flex-direction: column;
@@ -101,6 +118,15 @@ canvas {
 .thankyou-page h1 {
     color: #9b59b6;
     margin-bottom: 30px;
+    animation: scale-up-center 1s linear infinite alternate-reverse forwards;
+}
+@keyframes scale-up-center {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(10);
+    }
 }
 
 .thankyou-page a {
@@ -108,7 +134,7 @@ canvas {
     text-decoration: none;
 }
 
-/* signerslist.handlebars file */
+/*****   SIGNERS.HANDLEBARS FILE  *****/
 
 .signers-list {
     display: flex;
@@ -119,4 +145,135 @@ canvas {
 
 .signers-list h3 {
     color: #9b59b6;
+}
+
+/*****   LOGIN & REGISTER FORM HANDLEBARS FILE  *****/
+
+.login-form,
+.login-form *,
+.register-form,
+.register-form * {
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+}
+
+.login-form,
+.register-form {
+    max-width: 350px;
+    margin: 0 auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgb(197, 190, 190);
+}
+
+.logo-container {
+    text-align: center;
+    padding: 5px;
+    background: #a9c6de;
+}
+
+.logo-container img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #9b59b6;
+    animation: scale-up-center 1s linear infinite alternate-reverse forwards;
+}
+@keyframes scale-up-center {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.logo {
+    vertical-align: middle;
+    display: block;
+    max-width: 125px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.login-form_content,
+.register-form_content {
+    padding: 30px;
+    background: #eaf5ff;
+}
+
+.login-form_header,
+.register-form_header {
+    margin-bottom: 15px;
+    text-align: center;
+    color: #9b59b6;
+}
+
+.login-form_input,
+.register-form_input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #9b59b6;
+    background: white;
+    outline: none;
+    transition: border-color 0.5s;
+    cursor: text;
+}
+
+.login-form_input:focus,
+.register-form_input:focus {
+    border-color: #64b2cd;
+}
+
+.login-form_input::placeholder,
+.register-form_input::placeholder {
+    color: #64b2cd;
+}
+
+.login-form_btn,
+.register-form_btn {
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background: #9b59b6;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.login-form_btn:hover,
+.register-form_btn:hover {
+    background: #64b2cd;
+}
+.login-form_btn:active,
+.register-form_btn:active {
+    background: #3c70a4;
+}
+.login-form_links,
+.register-form_links {
+    margin-top: 15px;
+    text-align: center;
+}
+.login-form_link,
+.register-form_link {
+    font-size: 0.9em;
+    color: #9b59b6;
+    text-decoration: none;
+}
+
+.login-form_footer,
+.register-form_footer {
+    text-align: center;
+    padding: 10px;
+    background: #a9c6de;
+}
+
+.sign-up_link,
+.log-in_link {
+    font-size: 0.9em;
+    color: #9b59b6;
+    text-decoration: none;
 }

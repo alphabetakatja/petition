@@ -103,9 +103,11 @@ app.get("/thank-you", (req, res) => {
         .then(results => {
             console.log(results);
             console.log(results.rows[0]);
+
             res.render("thankyou", {
                 layout: "main",
-                signature: results.rows[0].signature
+                signature: results.rows[0].signature,
+                numOfSigners: req.session.sigId
             });
         })
         .catch(err => {
@@ -115,6 +117,18 @@ app.get("/thank-you", (req, res) => {
 
 app.get("/signers-list", (req, res) => {
     res.render("signerslist", {
+        layout: "main"
+    });
+});
+
+app.get("/login", (req, res) => {
+    res.render("login", {
+        layout: "main"
+    });
+});
+
+app.get("/register", (req, res) => {
+    res.render("register", {
         layout: "main"
     });
 });

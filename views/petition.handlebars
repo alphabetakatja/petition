@@ -1,6 +1,13 @@
 <div class="petition-container">
-    <h1>Welcome to my petition Page!</h1>
-    <p>If you wanna save the world with just one signature you are on the right place!</p>
+    <h1>Welcome to the Big Lebowski SQL Petition Page!</h1>
+    <div class="petition-text">
+        <p>If you wanna make the world a better place with just one signature you are on the right place!
+            All you need to do is fill out the fields below, which you can do single handedly while holding
+            a white russian in your other hand.
+            Help us collect enough signatures and bring the Dude, his Dudeness, Duder or el Duderino back to the big screen!
+        </p>
+        <h3>In Dude we Trust!</h3>
+    </div>
 
     <form class="sign-form" action="/petition" method="post">
         <input
@@ -30,7 +37,7 @@
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
 
-        <button class="submit-btn" type="submit" name="button">Submit</button>
+        <button class="submit-btn" type="submit" name="button">Abide</button>
 
     </form>
 
