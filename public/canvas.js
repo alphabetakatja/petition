@@ -3,8 +3,6 @@
     let canvas = document.querySelector("#signature-field");
     let c = canvas.getContext("2d");
     let canvasInput = document.querySelector(".hidden-field");
-    let signature = canvasInput.value;
-    let submit = document.querySelector(".submit-btn");
 
     c.strokeStyle = "black";
     c.lineWidth = 2;
@@ -31,19 +29,13 @@
                 c.stroke();
             }
         });
-        // when user mouses up, we need to call canvas's toDataUrl method to convert the drawing to a url
-        // once we have the url we need to store that url as the value of the hidden input field
+
         canvas.addEventListener("mouseup", function() {
             sign = false;
             dataURL = canvas.toDataURL();
             console.log(dataURL);
-            signature = dataURL;
-            console.log(signature);
-        });
-
-        submit.addEventListener("click", function(evt) {
-            // we need to send the signature to the db
-            console.log("this is submit: ", evt);
+            canvasInput.value = dataURL;
+            console.log(canvasInput.value);
         });
     });
 })();

@@ -2,7 +2,7 @@
     <h1>Welcome to my petition Page!</h1>
     <p>If you wanna save the world with just one signature you are on the right place!</p>
 
-    <form class="sign-form" action="index.html" method="post">
+    <form class="sign-form" action="/petition" method="post">
         <input
                     class="first-name"
                     type="text"
@@ -25,14 +25,14 @@
                         />
         <br>
 
-        <input class="hidden-field" type="hidden" name="" value="signature">
+        <input class="hidden-field" type="hidden" name="hidden-field" value="signature">
         <canvas id="signature-field" width="600" height="100"></canvas>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
 
-        <button class="submit-btn" type="button" name="button">Submit</button>
+        <button class="submit-btn" type="submit" name="button">Submit</button>
 
     </form>
-
-
 
 </div>
 
