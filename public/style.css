@@ -12,16 +12,16 @@
 body {
     display: grid;
     min-height: 100vh;
-    grid-template-rows: 110px 1fr 40px;
+    grid-template-rows: 90px 1fr 20px;
     font-family: "Antic Slab", serif;
     background-color: #34314f;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
         url(thedude2.jpg_large);
     background-size: cover;
     background-position: center;
     height: 100%;
     background-attachment: fixed;
-    color: color: #9b59b6;
+    color: #9b59b6;
 }
 
 footer p {
@@ -41,6 +41,7 @@ footer p {
 .petition-container h1 {
     color: #9b59b6;
     margin-bottom: 30px;
+    font-weight: 600;
 }
 
 .petition-container p {
@@ -58,6 +59,7 @@ footer p {
 .petition-text h3 {
     color: #9b59b6;
     font-size: 30px;
+    font-weight: lighter;
     text-align: center;
 }
 
@@ -158,7 +160,8 @@ canvas {
 }
 
 .login-form,
-.register-form {
+.register-form,
+.profile-form {
     max-width: 350px;
     margin: 0 auto;
     border-radius: 5px;
@@ -169,7 +172,7 @@ canvas {
 .logo-container {
     text-align: center;
     padding: 5px;
-    background: #a9c6de;
+    /* background: #a9c6de; */
 }
 
 .logo-container img {
@@ -199,7 +202,7 @@ canvas {
 .login-form_content,
 .register-form_content {
     padding: 30px;
-    background: #eaf5ff;
+    /* background: #eaf5ff; */
 }
 
 .login-form_header,
@@ -229,7 +232,8 @@ canvas {
 
 .login-form_input::placeholder,
 .register-form_input::placeholder {
-    color: #64b2cd;
+    /* color: #64b2cd; */
+    color: #9b59b6;
 }
 
 .login-form_btn,
@@ -268,7 +272,7 @@ canvas {
 .register-form_footer {
     text-align: center;
     padding: 10px;
-    background: #a9c6de;
+    /* background: #a9c6de; */
 }
 
 .sign-up_link,
@@ -276,4 +280,11 @@ canvas {
     font-size: 0.9em;
     color: #9b59b6;
     text-decoration: none;
+}
+
+/******  PROFILE.HANDLEBARS FILE  *****/
+.profile-title {
+    left: 600px;
+    max-width: 400px;
+    text-align: center;
 }

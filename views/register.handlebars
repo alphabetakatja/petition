@@ -1,19 +1,23 @@
+{{#if errMessage}}
+<h3>{{errMessage}}</h3>
+{{/if}}
+
 <form class="register-form" method="POST">
             <div class="logo-container">
                 <img src="https://p7.hiclipart.com/preview/285/877/92/jeff-bridges-the-big-lebowski-white-russian-youtube-dude-youtube.jpg" alt="The Dude logo">
             </div>
             <div class="register-form_content">
-                <div class="register-form_header">Login to your account:</div>
+                <div class="register-form_header">Create your account:</div>
                 <input class="register-form_input" type="text" name="first_name" placeholder="First Name" required minlength="3" maxlength="15" pattern="[a-zA-Z0-9]+">
                 <input class="register-form_input" type="text" name="last_name" placeholder="Last Name" required minlength="6" maxlength="15" pattern="[a-zA-Z0-9]+">
-                <input class="register-form_input" type="text" name="email" placeholder="E-mail Address" required minlength="6" maxlength="15" pattern="[a-zA-Z0-9]+">
+                <input class="register-form_input" type="text" name="email" placeholder="E-mail Address" required minlength="6" maxlength="50">
                 <input class="register-form_input" type="password" name="password" placeholder="Password" required minlength="6" maxlength="15" pattern="[a-zA-Z0-9]+">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <button class="register-form_btn" type="submit">Abide</button>
 
             </div>
          <div class="register-form_footer">
-             <a class="log-in_link" href="https://www.youtube.com/watch?v=IyYnnUcgeMc" target="_blank">Already a nihilist? Log in!</a>
+             <a class="log-in_link" href="/login" target="_blank">Already a nihilist? Log in!</a>
        </div>
 
         </form>
