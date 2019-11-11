@@ -1,16 +1,17 @@
 var spicedPg = require("spiced-pg");
 var db = spicedPg("postgres:postgres:postgres@localhost:5432/hab-petition");
 
-module.exports.getUser = function(email, password) {
-    return db.query(`SELECT * FROM users WHERE email=$1 AND password=$2`, [
-        email,
-        password
-    ]);
+module.exports.getUser = function(email) {
+    return db.query(`SELECT password FROM users WHERE email=$1`, [email]);
 };
 
 // returns the count of signatures
 module.exports.getSignatureCount = function() {
     return db.query(`SELECT COUNT(*) FROM signatures`);
+};
+
+module.exports.getSignature = function(id) {
+    return db.query(`SELECT signature FROM signatures WHERE id=$1`, [id]);
 };
 
 module.exports.addSignature = function(
@@ -27,8 +28,8 @@ RETURNING id
     );
 };
 
-module.exports.getSignature = function(id) {
-    return db.query(`SELECT signature FROM signatures WHERE id=$1`, [id]);
+module.exports.getName = function(id) {
+    return db.query(`SELECT first_name FROM signatures WHERE id=$1`, [id]);
 };
 
 module.exports.registerUser = function(first_name, last_name, email, password) {
@@ -39,7 +40,5 @@ module.exports.registerUser = function(first_name, last_name, email, password) {
 };
 
 module.exports.getSigners = function() {
-    return db.query(
-        `SELECT first_name AS First Name, last_name AS Last Name FROM signatures`
-    );
+    return db.query(`SELECT first_name, last_name FROM signatures`);
 };
