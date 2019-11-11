@@ -3,6 +3,8 @@ const app = express();
 const hb = require("express-handlebars");
 const db = require("./utils/db");
 const cookieSession = require("cookie-session");
+// importing both fns from bcrypt
+const { hash, compare } = require("./utils/bc");
 // csurf -cross-site request forger
 const csurf = require("csurf");
 // handlebars
@@ -67,14 +69,14 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thank-you", (req, res) => {
-    // console.log("/thankyou route: ", req.session);
+    console.log("/thankyou route: ", req.session);
     console.log("sigID is: ", req.session.sigId);
     let getSignaturePromise = db.getSignature(req.session.sigId);
     let numberOfSignersPromise = db.getSignatureCount();
     Promise.all([getSignaturePromise, numberOfSignersPromise])
         .then(results => {
-            const signedCount = results[1].rows[0].count;
             const signature = results[0].rows[0].signature;
+            const signedCount = results[1].rows[0].count;
             console.log(signedCount);
             res.render("thankyou", {
                 layout: "main",
@@ -88,12 +90,30 @@ app.get("/thank-you", (req, res) => {
 });
 
 app.get("/signers-list", (req, res) => {
-    res.render("signerslist", {
+    db.getSigners()
+        .then(results => {
+            console.log("signers results:", results.rows[0]);
+            let signers = results.rows[0];
+            res.render("signerslist", {
+                layout: "main",
+                signers
+            });
+        })
+        .catch(err => {
+            console.log("err in /signers-list: ", err);
+        });
+});
+
+app.get("/login", (req, res) => {
+    res.render("login", {
         layout: "main"
     });
 });
 
-app.get("/login", (req, res) => {
+// app.post("/login", (req, res) => {});
+
+app.get("/logout", (req, res) => {
+    delete req.session.user;
     res.render("login", {
         layout: "main"
     });
@@ -103,6 +123,43 @@ app.get("/register", (req, res) => {
     res.render("register", {
         layout: "main"
     });
+});
+
+app.post("/register", (req, res) => {
+    console.log("req body in /register: ", req.body);
+    const firstName = req.body["first_name"];
+    const lastName = req.body["last_name"];
+    const email = req.body.email;
+    const password = req.body.password;
+    hash(password)
+        .then(hashedPassword => {
+            console.log("hash: ", hashedPassword);
+
+            // return hashedPassword;
+            db.registerUser(firstName, lastName, email, hashedPassword).then(
+                results => {
+                    console.log("registerUser fn results: ", results.rows[0]);
+                    const userID = results.rows[0].id;
+
+                    req.session.user = {
+                        id: userID,
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        hashedPassword: hashedPassword
+                    };
+                    console.log(req.session.user);
+                    res.redirect("/petition");
+                }
+            );
+        })
+        .catch(err => {
+            console.log(err);
+            res.render("register", {
+                errMessage: "Oooops something went wrong!",
+                layout: "main"
+            });
+        });
 });
 
 app.listen(8080, () => console.log("Listening!"));
