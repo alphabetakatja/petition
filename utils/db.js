@@ -14,17 +14,12 @@ module.exports.getSignature = function(id) {
     return db.query(`SELECT signature FROM signatures WHERE id=$1`, [id]);
 };
 
-module.exports.addSignature = function(
-    first_name,
-    last_name,
-    signature,
-    userID
-) {
+module.exports.addSignature = function(signature, userID) {
     return db.query(
-        `INSERT INTO signatures (first_name, last_name, signature, user_id) VALUES ($1, $2, $3, $4)
+        `INSERT INTO signatures (signature, user_id) VALUES ($1, $2)
 RETURNING id
         `,
-        [first_name, last_name, signature, userID]
+        [signature, userID]
     );
 };
 

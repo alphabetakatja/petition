@@ -50,11 +50,9 @@ app.get("/petition", (req, res) => {
 app.post("/petition", (req, res) => {
     console.log("i am doing a post request");
     console.log("req: ", req.body);
-    let firstName = req.body["first-name"];
-    let lastName = req.body["last-name"];
     let signature = req.body["hidden-field"];
     let userID = req.session.user.id;
-    db.addSignature(firstName, lastName, signature, userID)
+    db.addSignature(signature, userID)
         .then(results => {
             // console.log(results);
             req.session.sigId = results.rows[0].id;
@@ -87,6 +85,10 @@ app.get("/thank-you", (req, res) => {
         })
         .catch(err => {
             console.log("/thank-you route err: ", err);
+            res.render("thankyou", {
+                layout: "main",
+                errMessage: "Oooops something went wrong! Try again..."
+            });
         });
 });
 
@@ -136,7 +138,7 @@ app.post("/login", (req, res) => {
                         req.session.user = {
                             sigId: user.sigId
                         };
-                        res.redirect("/thanks");
+                        res.redirect("/thank-you");
                     } else {
                         res.redirect("/petition");
                     }
