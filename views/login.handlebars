@@ -1,7 +1,7 @@
 {{#if errMessage}}
 <h3>{{errMessage}}</h3>
-{{/if}}
 
+{{else}}
 <form class="login-form" method="POST">
     <div class="logo-container">
         <img src="/walter.jpg" alt="The Dude logo">
@@ -9,8 +9,8 @@
 
     <div class="login-form_content">
         <div class="login-form_header">Login to your account:</div>
-        <input class="login-form_input" type="text" name="email" placeholder="E-mail Address">
-        <input class="login-form_input" type="password" name="password" placeholder="Password">
+        <input class="login-form_input" type="text" name="email" placeholder="E-mail Address" required>
+        <input class="login-form_input" type="password" name="password" placeholder="Password" required>
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <button class="login-form_btn" type="submit">Abide</button>
 
@@ -20,3 +20,5 @@
         <a class="sign-up_link" href="/register" target="_blank">Not a nihilist yet? What'ya waiting for!</a>
     </div>
 </form>
+
+{{/if}}

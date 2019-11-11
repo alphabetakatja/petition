@@ -1,4 +1,10 @@
 <div class="signers-list">
-    <h3>This is a list of all the people who signed the Petition!</h1>
+    <h3>This is a list of all the people who signed the Petition:</h1>
+        {{#signers}}
+            <ul>
+                <li>{{first_name}} {{last_name}}</li>
+            </ul>
+
+        {{/signers}}
 
 </div>

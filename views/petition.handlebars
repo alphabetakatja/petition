@@ -11,38 +11,20 @@
 
     {{#if errMessage}}
     <h3>{{errMessage}}</h3>
+    {{else}}
+        <form class="sign-form" action="/petition" method="post">
+            <input class="first-name" type="text" name="first-name"placeholder="First Name"/>
+            <input class="last-name" type="text" name="last-name" placeholder="Last Name"/>
+            <br>
+            <input class="hidden-field" type="hidden" name="hidden-field" value="signature">
+            <canvas id="signature-field" width="600" height="100"></canvas>
+            <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+            <button class="submit-btn" type="submit" name="button">Abide</button>
+
+        </form>
     {{/if}}
-    <form class="sign-form" action="/petition" method="post">
-        <input
-                    class="first-name"
-                    type="text"
-                    name="first-name"
-                    placeholder="First Name"
-                    required
-                    minlength="3"
-                    maxlength="15"
-                    pattern="[a-zA-Z0-9]+"
-                />
-                <input
-                            class="last-name"
-                            type="text"
-                            name="last-name"
-                            placeholder="Last Name"
-                            required
-                            minlength="3"
-                            maxlength="15"
-                            pattern="[a-zA-Z0-9]+"
-                        />
-        <br>
-
-        <input class="hidden-field" type="hidden" name="hidden-field" value="signature">
-        <canvas id="signature-field" width="600" height="100"></canvas>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
-
-        <button class="submit-btn" type="submit" name="button">Abide</button>
-
-    </form>
 
 </div>
 

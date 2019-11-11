@@ -53,7 +53,8 @@ app.post("/petition", (req, res) => {
     let firstName = req.body["first-name"];
     let lastName = req.body["last-name"];
     let signature = req.body["hidden-field"];
-    db.addSignature(firstName, lastName, signature)
+    let userID = req.session.user.id;
+    db.addSignature(firstName, lastName, signature, userID)
         .then(results => {
             // console.log(results);
             req.session.sigId = results.rows[0].id;
@@ -113,9 +114,40 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
     console.log("req body in /login: ", req.body);
     const email = req.body.email;
+    let password = req.body.password;
     db.getUser(email).then(results => {
-        console.log(results.rows[0]);
-        let hashedPassword = results.rows[0];
+        console.log("getUser results ", results.rows[0]);
+        const user = results.rows[0];
+        let hashedPassword = results.rows[0].password;
+        compare(password, hashedPassword).then(match => {
+            console.log(match);
+            if (match) {
+                req.session.user = {
+                    id: user.id
+                };
+                console.log("cookie login", req.session);
+                db.checkIfSigned(req.session.user.id).then(results => {
+                    console.log(
+                        "checking if the user signed in: ",
+                        results.rows
+                    );
+                    if (results.rows.length > 0) {
+                        //the user has signed in!
+                        req.session.user = {
+                            sigId: user.sigId
+                        };
+                        res.redirect("/thanks");
+                    } else {
+                        res.redirect("/petition");
+                    }
+                });
+            } else {
+                res.render("login", {
+                    layout: "main",
+                    errMessage: "Oooops something went wrong!"
+                });
+            }
+        });
     });
 });
 
@@ -153,7 +185,7 @@ app.post("/register", (req, res) => {
                         firstName: firstName,
                         lastName: lastName,
                         email: email,
-                        hashedPassword: hashedPassword
+                        password: hashedPassword
                     };
                     console.log(req.session.user);
                     res.redirect("/petition");
@@ -161,7 +193,7 @@ app.post("/register", (req, res) => {
             );
         })
         .catch(err => {
-            console.log(err);
+            console.log("error in register route: ", err);
             res.render("register", {
                 errMessage: "Oooops something went wrong!",
                 layout: "main"
