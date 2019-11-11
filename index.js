@@ -110,7 +110,14 @@ app.get("/login", (req, res) => {
     });
 });
 
-// app.post("/login", (req, res) => {});
+app.post("/login", (req, res) => {
+    console.log("req body in /login: ", req.body);
+    const email = req.body.email;
+    db.getUser(email).then(results => {
+        console.log(results.rows[0]);
+        let hashedPassword = results.rows[0];
+    });
+});
 
 app.get("/logout", (req, res) => {
     delete req.session.user;
@@ -130,7 +137,7 @@ app.post("/register", (req, res) => {
     const firstName = req.body["first_name"];
     const lastName = req.body["last_name"];
     const email = req.body.email;
-    const password = req.body.password;
+    let password = req.body.password;
     hash(password)
         .then(hashedPassword => {
             console.log("hash: ", hashedPassword);
