@@ -31,7 +31,7 @@ module.exports.registerUser = function(first_name, last_name, email, password) {
 };
 
 module.exports.getSigners = function() {
-    return db.query(`SELECT first_name, last_name FROM signatures`);
+    return db.query(`SELECT * FROM signatures`);
 };
 
 module.exports.checkIfSigned = function(id) {

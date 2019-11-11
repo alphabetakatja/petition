@@ -68,7 +68,7 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thank-you", (req, res) => {
-    console.log("/thankyou route: ", req.session);
+    console.log("/thank-you route: ", req.session);
     console.log("sigID is: ", req.session.sigId);
     let getSignaturePromise = db.getSignature(req.session.sigId);
     let numberOfSignersPromise = db.getSignatureCount();
@@ -118,43 +118,53 @@ app.post("/login", (req, res) => {
     const email = req.body.email;
     let password = req.body.password;
     db.getUser(email).then(results => {
-        console.log("getUser results ", results.rows[0]);
-        const user = results.rows[0];
+        console.log("getUser results ", results);
+        // const user = results.rows[0];
         let hashedPassword = results.rows[0].password;
-        compare(password, hashedPassword).then(match => {
-            console.log(match);
-            if (match) {
-                req.session.user = {
-                    id: user.id
-                };
-                console.log("cookie login", req.session);
-                db.checkIfSigned(req.session.user.id).then(results => {
-                    console.log(
-                        "checking if the user signed in: ",
-                        results.rows
-                    );
-                    if (results.rows.length > 0) {
-                        //the user has signed in!
-                        req.session.user = {
-                            sigId: user.sigId
-                        };
-                        res.redirect("/thank-you");
-                    } else {
-                        res.redirect("/petition");
-                    }
-                });
-            } else {
+        compare(password, hashedPassword)
+            .then(match => {
+                console.log(match);
+                if (match) {
+                    req.session.user = {
+                        id: results.rows[0].id
+                    };
+                    console.log("cookie login", req.session);
+                    db.checkIfSigned(req.session.user.id).then(results => {
+                        console.log(
+                            "checking if the user signed the petition: ",
+                            results.rows
+                        );
+                        if (results.rows.length > 0) {
+                            //the user has signed petition!
+                            req.session.user = {
+                                sigId: results.rows[0].sigId
+                            };
+                            res.redirect("/thank-you");
+                        } else {
+                            res.redirect("/petition");
+                        }
+                    });
+                }
+                // else {
+                //     res.render("login", {
+                //         layout: "main",
+                //         errMessage: "Oooops something went wrong!"
+                //     });
+                // }
+            })
+            .catch(err => {
+                console.log("error in /login route", err);
                 res.render("login", {
                     layout: "main",
                     errMessage: "Oooops something went wrong!"
                 });
-            }
-        });
+            });
     });
 });
 
 app.get("/logout", (req, res) => {
-    delete req.session.user;
+    // delete req.session.user;
+    req.session = null;
     res.render("login", {
         layout: "main"
     });
