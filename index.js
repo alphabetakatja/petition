@@ -72,7 +72,7 @@ app.post("/register", (req, res) => {
                         password: hashedPassword
                     };
                     console.log(req.session.user);
-                    res.redirect("/petition");
+                    res.redirect("/profile");
                 }
             );
         })
@@ -128,7 +128,7 @@ app.post("/login", (req, res) => {
                                     // req.session.sigId = results.rows[0].id;
                                     res.redirect("/thank-you");
                                 } else {
-                                    res.redirect("/petition");
+                                    res.redirect("/profile");
                                 }
                             })
                             .catch(err => {
@@ -243,6 +243,35 @@ app.get("/profile", (req, res) => {
     res.render("profile", {
         layout: "main"
     });
+});
+
+app.post("/profile", (req, res) => {
+    console.log("i am doing a post profile request");
+    console.log("req: ", req.body);
+    let age = req.body.age;
+    let city = req.body.city;
+    let homepage = req.body.url;
+    let userID = req.session.user.id;
+
+    const checkUrl = function(url) {
+        if (
+            !url.startsWith("http://") &&
+            !url.startsWith("https://") &&
+            !url.startsWith("//")
+        ) {
+            url = "http://" + url;
+        }
+        return url;
+    };
+
+    db.addProfile(age, city, checkUrl(homepage), userID)
+        .then(results => {
+            console.log("results in addProfile function: ", results.rows[0]);
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            console.log("error in addProfile fn: ", err);
+        });
 });
 
 app.listen(8080, () => console.log("Listening!"));
