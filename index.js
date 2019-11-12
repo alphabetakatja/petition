@@ -103,54 +103,47 @@ app.post("/login", (req, res) => {
     db.getUserInfo(email)
         .then(results => {
             console.log("getUser results ", results.rows[0]);
-            // const user = results.rows[0];
             let hashedPassword = results.rows[0].password;
+
             compare(password, hashedPassword)
                 .then(match => {
                     console.log(match);
                     if (match) {
                         req.session.user = {};
                         req.session.user.id = results.rows[0].id;
-                        // req.session.user.id = results.rows[0].id;
-                        console.log("cookie login", req.session);
-                        db.checkIfSigned(req.session.user.id)
-                            .then(results => {
-                                console.log(
-                                    "checking if the user signed the petition: ",
-                                    results.rows
-                                );
-                                if (results.rows.length > 0) {
-                                    console.log(
-                                        "the user has signed the petition"
-                                    );
-                                    //the user has signed petition!
-                                    req.session.user.sigId = results.rows[0].id;
-                                    // req.session.sigId = results.rows[0].id;
-                                    res.redirect("/thank-you");
-                                } else {
-                                    res.redirect("/profile");
-                                }
-                            })
-                            .catch(err => {
-                                console.log("error in /login route", err);
-                            });
+                        req.session.user.sigId = results.rows[0].sigid;
+                        console.log(
+                            "checking if the user signed the petition: ",
+                            results.rows
+                        );
+
+                        if (req.session.user.sigId != null) {
+                            console.log("the user has signed the petition");
+                            //the user has signed petition!
+                            res.redirect("/thank-you");
+                        } else {
+                            res.redirect("/profile");
+                        }
                     } else {
                         // if the passwords don't match
+                        console.log("The passwords don't match!");
                         res.render("login", {
                             layout: "main",
-                            errMessage: "Passwords dont match, try again!"
+                            errMessage: "Passwords don't match, try again!"
                         });
                     }
                 })
                 .catch(err => {
                     console.log("err present in getUserPassword query: ", err);
                 });
+            // ovdje zavrsava comment out
         })
         .catch(err => {
             console.log("err present in getUserInfo query: ", err);
             res.render("login", {
                 layout: "main",
-                errMessage: "bla!"
+                errMessage:
+                    "Something went wrong! Please type in your username and password again..."
             });
         });
 });
@@ -226,7 +219,7 @@ app.get("/thank-you", (req, res) => {
 app.get("/signers-list", (req, res) => {
     db.getSigners()
         .then(results => {
-            console.log("signers results:", results.rows[0]);
+            console.log("getSigners results:", results.rows);
             let signers = results.rows;
             res.render("signerslist", {
                 layout: "main",
@@ -234,8 +227,20 @@ app.get("/signers-list", (req, res) => {
             });
         })
         .catch(err => {
-            console.log("err in /signers-list: ", err);
+            console.log("err in /signerslist route: ", err);
         });
+});
+
+app.get("/signers-list/:city", (req, res) => {
+    const { city } = req.params;
+    console.log(req.params.city);
+    db.getSignersByCity(city).then(results => {
+        console.log("getSignersByCity result: ", results.rows);
+        res.render("signerslist", {
+            layout: "main",
+            signers: results.rows
+        });
+    });
 });
 
 // ***** PROFILE ROUTE *****
@@ -272,6 +277,12 @@ app.post("/profile", (req, res) => {
         .catch(err => {
             console.log("error in addProfile fn: ", err);
         });
+});
+
+app.get("/profile/edit", (req, res) => {
+    res.render("edit", {
+        layout: "main"
+    });
 });
 
 app.listen(8080, () => console.log("Listening!"));

@@ -1,10 +1,9 @@
 <div class="signers-list">
     <h3>We the undersigned demand that the Cohen Brothers start with filming a Big Lebowski sequel!</h1>
-        {{#signers}}
-            <ul>
-                <li>{{first_name}} {{last_name}}</li>
-            </ul>
-
-        {{/signers}}
+        <ul>
+            {{#signers}}
+                    <li>{{firstname}} | {{lastname}} | {{age}} | <a href="/signers-list/{{city}}" target="_blank">{{city}}</a> | <a href="{{url}}" target="_blank">{{url}}</a></li>
+            {{/signers}}
+        </ul>
 
 </div>

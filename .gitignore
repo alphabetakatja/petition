@@ -5,3 +5,5 @@ secrets.json
 experiment.js
 experiment.handlebars
 experiment-db.js
+cities.sql
+petition-index.js

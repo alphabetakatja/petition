@@ -21,7 +21,11 @@ module.exports.registerUser = function(first_name, last_name, email, password) {
 
 // ***** LOGIN ROUTE *****
 module.exports.getUserInfo = function(email) {
-    return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
+    return db.query(
+        `SELECT users.password, users.id, signatures.id
+        AS sigId FROM users LEFT JOIN signatures ON signatures.user_id = users.id WHERE email=$1`,
+        [email]
+    );
 };
 
 module.exports.checkIfSigned = function(id) {
@@ -40,7 +44,30 @@ module.exports.getSignature = function(id) {
 
 // ***** SIGNERS-LIST ROUTE *****
 module.exports.getSigners = function() {
-    return db.query(`SELECT * FROM signatures`);
+    return db.query(
+        `SELECT users.first_name AS firstName, users.last_name AS lastName, user_profiles.age AS age, user_profiles.city AS city, user_profiles.url AS url
+        FROM signatures
+        LEFT JOIN users
+        ON signatures.user_id = users.id
+        LEFT JOIN user_profiles
+        ON signatures.user_id = user_profiles.user_id
+        `
+    );
+};
+
+module.exports.getSignersByCity = function(city) {
+    return db.query(
+        `
+        SELECT users.first_name AS firstName, users.last_name AS lastName, user_profiles.age AS age, user_profiles.city AS city, user_profiles.url AS url
+        FROM signatures
+        LEFT JOIN users
+        ON signatures.user_id = users.id
+        LEFT JOIN user_profiles
+        ON signatures.user_id = user_profiles.user_id
+        WHERE LOWER(city) = LOWER($1);
+        `,
+        [city]
+    );
 };
 
 // ***** PROFILE ROUTE *****

@@ -95,6 +95,7 @@ canvas {
 .hidden-field {
     width: 1px;
     height: 1px;
+    background-color: rgb(197, 190, 190);
 }
 
 .submit-btn {
@@ -143,10 +144,22 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: #ffd5d5;
+}
+.signers-list h3 {
+    font-size: 25px;
+    margin-bottom: 50px;
+    font-weight: lighter;
+}
+.signers-list li {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffd5d5;
 }
 
-.signers-list h3 {
-    color: #9b59b6;
+.signers-list a {
+    text-decoration: none;
+    color: #ffd5d5;
 }
 
 /*****   LOGIN & REGISTER FORM HANDLEBARS FILE  *****/
