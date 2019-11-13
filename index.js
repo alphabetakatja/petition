@@ -290,9 +290,34 @@ app.post("/profile", (req, res) => {
 });
 
 app.get("/profile/edit", (req, res) => {
-    res.render("edit", {
-        layout: "main"
-    });
+    console.log("user cookie in get edit profile: ", req.session.user);
+    let userID = req.session.user.id;
+    db.editProfile(userID)
+        .then(
+            results => {
+                console.log(
+                    "information pulled from editProfile fn: ",
+                    results.rows[0]
+                );
+            }
+
+            // res.render("edit", {
+            //     layout: "main"
+            // });
+        )
+        .catch(err => {
+            console.log("error in get edit profile route: ", err);
+        });
+});
+
+app.post("/profile/edit", (req, res) => {
+    console.log("post route in edit profile: ", req.body);
+    // let firstName = req.body["first_name"];
+    // let lastName = req.body["last_name"];
+    // let email = req.body.email;
+    // let age = req.body.age;
+    // let city = req.body.city;
+    // let url = req.body.url;
 });
 
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
