@@ -90,7 +90,8 @@ app.post("/register", (req, res) => {
                 .catch(err => {
                     console.log("error in registerUser fn: ", err);
                     res.render("register", {
-                        errMessage: "Oooops something went wrong!",
+                        errMessage:
+                            "You're already a nihilist, try with logging in...",
                         layout: "main"
                     });
                 });
@@ -127,10 +128,12 @@ app.post("/login", (req, res) => {
             compare(password, hashedPassword)
                 .then(match => {
                     console.log(match);
+
                     if (match) {
-                        req.session.user = {};
-                        req.session.user.id = results.rows[0].id;
-                        req.session.user.sigId = results.rows[0].sigid;
+                        req.session.user = {
+                            id: results.rows[0].id,
+                            sigId: results.rows[0].sigid
+                        };
                         console.log(
                             "checking if the user signed the petition: ",
                             results.rows
@@ -148,14 +151,14 @@ app.post("/login", (req, res) => {
                         console.log("The passwords don't match!");
                         res.render("login", {
                             layout: "main",
-                            errMessage: "Passwords don't match, try again!"
+                            errMessage:
+                                "Passwords don't match, please login again!"
                         });
                     }
                 })
                 .catch(err => {
                     console.log("err present in getUserPassword query: ", err);
                 });
-            // ovdje zavrsava comment out
         })
         .catch(err => {
             console.log("err present in getUserInfo query: ", err);
@@ -169,9 +172,7 @@ app.post("/login", (req, res) => {
 
 // ***** LOGOUT ROUTE *****
 app.get("/logout", (req, res) => {
-    // delete req.session.user;
     req.session = null;
-    // res.redirect("/login");
     res.render("logout", {
         layout: "main"
     });
@@ -189,20 +190,23 @@ app.post("/petition", (req, res) => {
     console.log("req: ", req.body);
     let signature = req.body["hidden-field"];
     let userID = req.session.user.id;
-    db.addSignature(signature, userID)
-        .then(results => {
-            // console.log(results);
-            req.session.user.sigId = results.rows[0].id;
-            res.redirect("/thank-you");
-        })
-        .catch(err => {
-            console.log("addSignature fn err: ", err);
-            res.render("petition", {
-                errMessage:
-                    "Oooops something went wrong! Make sure you fill out the signature field!",
-                layout: "main"
+    if (signature != "") {
+        // don't add a signature if the user hasn't signed in
+        db.addSignature(signature, userID)
+            .then(results => {
+                // console.log(results);
+                req.session.user.sigId = results.rows[0].id;
+                res.redirect("/thank-you");
+            })
+            .catch(err => {
+                console.log("addSignature fn err: ", err);
+                res.render("petition", {
+                    errMessage:
+                        "Oooops something went wrong! Make sure you fill out the signature field!",
+                    layout: "main"
+                });
             });
-        });
+    }
 });
 
 // ***** THANK-YOU ROUTE *****
@@ -233,6 +237,22 @@ app.get("/thank-you", (req, res) => {
             res.render("thankyou", {
                 layout: "main",
                 errMessage: "Oooops something went wrong! Try again..."
+            });
+        });
+});
+
+app.post("/thank-you/delete", (req, res) => {
+    db.deleteSignature(req.session.user.id)
+        .then(() => {
+            req.session.user.sigId = null;
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            console.log("error in deletSignature fn: ", err);
+            res.render("thank-you", {
+                layout: "main",
+                errMessage:
+                    "There's been an error during your signature deletion. Please try again..."
             });
         });
 });
@@ -286,6 +306,7 @@ app.post("/profile", (req, res) => {
             res.redirect("/petition");
         })
         .catch(err => {
+            // there is a bug here after you login
             console.log("error in addProfile fn: ", err);
         });
 });

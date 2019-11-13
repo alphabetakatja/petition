@@ -92,10 +92,11 @@ canvas {
     margin-bottom: 20px;
 }
 
-.hidden-field {
-    width: 1px;
-    height: 1px;
-    background-color: rgb(197, 190, 190);
+/* .hidden-field  */
+.thankyou-page img {
+    width: 600px;
+    height: 100px;
+    /* background-color: rgb(197, 190, 190); */
     border: 2px solid #9b59b6;
     border-radius: 5px;
 }
@@ -165,6 +166,9 @@ canvas {
 }
 
 /*****   LOGIN & REGISTER FORM HANDLEBARS FILE  *****/
+.login-error {
+    text-align: center;
+}
 
 .login-form,
 .login-form *,

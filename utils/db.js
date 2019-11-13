@@ -45,6 +45,10 @@ module.exports.getSignature = function(id) {
     return db.query(`SELECT signature FROM signatures WHERE id=$1`, [id]);
 };
 
+module.exports.deleteSignature = function(userID) {
+    return db.query(`DELETE FROM signatures WHERE user_id=$1`, [userID]);
+};
+
 // ***** SIGNERS-LIST ROUTE *****
 module.exports.getSigners = function() {
     return db.query(
