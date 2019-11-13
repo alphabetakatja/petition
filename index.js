@@ -352,23 +352,14 @@ app.post("/profile/edit", (req, res) => {
                         "results if the user has updated the password: ",
                         results.rows
                     );
-                    let users = results[0];
-                    let userProfiles = results[1];
-                    let mergeResults = [...users, ...userProfiles];
-                    console.log("merged results with password: ", mergeResults);
+                    // let users = results[0];
+                    // let userProfiles = results[1];
+                    // let mergeResults = [...users, ...userProfiles];
+                    // console.log("merged results with password: ", mergeResults);
                     res.redirect("/thank-you");
                 })
-                .catch(function(result) {
-                    res.render("edit", {
-                        // console.log("catch err in promise.all with pass", err)
-                        layout: "main",
-                        firstName: result.rows[0].firstname,
-                        lastName: result.rows[0].lastname,
-                        email: result.rows[0].email,
-                        age: result.rows[0].age || null,
-                        city: result.rows[0].city || null,
-                        homepage: result.rows[0].url || null
-                    });
+                .catch(err => {
+                    console.log("catch err in promise.all with pass", err);
                 });
         });
     } else {
@@ -391,11 +382,6 @@ app.post("/profile/edit", (req, res) => {
                     "results if the user hasn't updated the password: ",
                     results.rows
                 );
-                let users = results[0];
-                let userProfiles = results[1];
-                console.log("users: ", users, "userProfiles: ", userProfiles);
-                let mergeResults = [...users, ...userProfiles];
-                console.log("merged results without password: ", mergeResults);
                 res.redirect("/thank-you");
             })
             .catch(err =>
