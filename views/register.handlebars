@@ -1,5 +1,6 @@
 {{#if errMessage}}
     <h3>{{errMessage}}</h3>
+    {{>errorMessage}}
 
 {{else}}
     <form class="register-form" method="POST">
@@ -14,11 +15,11 @@
                 <input class="register-form_input" type="password" name="password" placeholder="Password" required minlength="5" maxlength="15" pattern="[a-zA-Z0-9]+">
                 <input type="hidden" name="_csrf" value="{{csrfToken}}">
                 <button class="register-form_btn" type="submit">Abide</button>
-
             </div>
-         <div class="register-form_footer">
-             <a class="log-in_link" href="/login" target="_blank">Already a nihilist? Log in!</a>
-       </div>
+
+            <div class="register-form_footer">
+                <a class="log-in_link" href="/login" target="_blank">Already a nihilist? Log in!</a>
+            </div>
 
     </form>
 {{/if}}

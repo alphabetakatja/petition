@@ -6,6 +6,13 @@
     <h1>Thank you for your signature!</h3>
         <img src="{{signature}}" />
     <a href="/signers-list" target="_blank">Check out the other {{numOfSigners}} dudes that abide</a>
+    <a href="/profile/edit">Edit your profile</a>
+    <a href="/logout">Log out</a>
+
+    <form action="/thank-you/delete" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button id="deleteSignature">Delete signature</button>
+    </form>
 
 {{/if}}
 </div>

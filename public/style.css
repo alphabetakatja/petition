@@ -96,6 +96,8 @@ canvas {
     width: 1px;
     height: 1px;
     background-color: rgb(197, 190, 190);
+    border: 2px solid #9b59b6;
+    border-radius: 5px;
 }
 
 .submit-btn {
@@ -298,6 +300,32 @@ canvas {
 /******  PROFILE.HANDLEBARS FILE  *****/
 .profile-title {
     left: 600px;
-    max-width: 400px;
+    /* max-width: 400px; */
     text-align: center;
+}
+
+.profile-title h2,
+h3 {
+    margin-bottom: 30px;
+    font-weight: lighter;
+    text-transform: uppercase;
+}
+
+/******  EDIT.HANDLEBARS FILE  *****/
+/* .profile-title h2 {
+    font-weight: lighter;
+    text-transform: uppercase;
+} */
+
+/******  LOGOUT.HANDLEBARS FILE  *****/
+.logout-message p {
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.logout-message a {
+    text-decoration: none;
+    color: #ffd5d5;
 }

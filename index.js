@@ -53,14 +53,15 @@ app.post("/register", (req, res) => {
     console.log("req body in /register: ", req.body);
     const firstName = req.body["first_name"];
     const lastName = req.body["last_name"];
+    console.log("firstName: ", firstName);
     const email = req.body.email;
     let password = req.body.password;
     hash(password)
         .then(hashedPassword => {
             console.log("hash: ", hashedPassword);
             // return hashedPassword;
-            db.registerUser(firstName, lastName, email, hashedPassword).then(
-                results => {
+            db.registerUser(firstName, lastName, email, hashedPassword)
+                .then(results => {
                     console.log("registerUser fn results: ", results.rows[0]);
                     const userID = results.rows[0].id;
 
@@ -73,8 +74,14 @@ app.post("/register", (req, res) => {
                     };
                     console.log(req.session.user);
                     res.redirect("/profile");
-                }
-            );
+                })
+                .catch(err => {
+                    console.log("error in registerUser fn: ", err);
+                    res.render("register", {
+                        errMessage: "Oooops something went wrong!",
+                        layout: "main"
+                    });
+                });
         })
         .catch(err => {
             console.log("error in register route: ", err);
@@ -152,7 +159,10 @@ app.post("/login", (req, res) => {
 app.get("/logout", (req, res) => {
     // delete req.session.user;
     req.session = null;
-    res.redirect("/login");
+    // res.redirect("/login");
+    res.render("logout", {
+        layout: "main"
+    });
 });
 
 // ***** PETITION ROUTE *****
