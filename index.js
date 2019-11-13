@@ -289,35 +289,38 @@ app.post("/profile", (req, res) => {
         });
 });
 
+// ***** EDIT PROFILE ROUTE *****
 app.get("/profile/edit", (req, res) => {
     console.log("user cookie in get edit profile: ", req.session.user);
     let userID = req.session.user.id;
     db.editProfile(userID)
-        .then(
-            results => {
-                console.log(
-                    "information pulled from editProfile fn: ",
-                    results.rows[0]
-                );
-            }
-
-            // res.render("edit", {
-            //     layout: "main"
-            // });
-        )
+        .then(results => {
+            console.log(
+                "information pulled from editProfile fn: ",
+                results.rows[0]
+            );
+            res.render("edit", {
+                layout: "main",
+                firstName: results.rows[0].firstname,
+                lastName: results.rows[0].lastname,
+                email: results.rows[0].email,
+                age: results.rows[0].age || null,
+                city: results.rows[0].city || null,
+                url: results.rows[0].url || null
+            });
+        })
         .catch(err => {
             console.log("error in get edit profile route: ", err);
+            res.render("edit", {
+                layout: "main",
+                errMessage:
+                    "Sorry, something went wrong while editing your profile. Try again later..."
+            });
         });
 });
 
 app.post("/profile/edit", (req, res) => {
     console.log("post route in edit profile: ", req.body);
-    // let firstName = req.body["first_name"];
-    // let lastName = req.body["last_name"];
-    // let email = req.body.email;
-    // let age = req.body.age;
-    // let city = req.body.city;
-    // let url = req.body.url;
 });
 
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
