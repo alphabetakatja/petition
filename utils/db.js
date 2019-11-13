@@ -86,3 +86,27 @@ module.exports.addProfile = function(age, city, homepage, userID) {
         ]
     );
 };
+
+// ***** EDIT PROFILE ROUTE *****
+module.exports.editProfile = function(id) {
+    return db.query(
+        `SELECT users.first_name AS firstName, users.last_name AS lastName, users.email AS email, user_profiles.age AS age, user_profiles.city AS city, user_profiles.url AS url
+       FROM users
+       LEFT JOIN user_profiles
+       ON users.id = user_profiles.user_id
+       WHERE users.id = $1`,
+        [id]
+    );
+};
+
+module.exports.updateProfileWithoutPass = function(
+    firstName,
+    lastName,
+    email,
+    userID
+) {
+    return db.query(
+        `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
+        [firstName, lastName, email, userID]
+    );
+};

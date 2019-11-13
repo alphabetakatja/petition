@@ -321,6 +321,26 @@ app.get("/profile/edit", (req, res) => {
 
 app.post("/profile/edit", (req, res) => {
     console.log("post route in edit profile: ", req.body);
+    console.log("post route in edit profile cookie: ", req.session.user);
+    let firstName = req.body["first_name"];
+    let lastName = req.body["last_name"];
+    let email = req.body.email;
+    // let age = req.body.age;
+    // let city = req.body.city;
+    // let url = req.body.url;
+    let userID = req.session.user.id;
+    if (req.body.password == "") {
+        db.updateProfileWithoutPass(firstName, lastName, email, userID)
+            .then(results => {
+                console.log("Profile updated without password: ", results.rows);
+            })
+            .catch(err => {
+                console.log(
+                    "There's an error in updateProfileWithoutPass: ",
+                    err
+                );
+            });
+    }
 });
 
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
