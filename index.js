@@ -36,6 +36,18 @@ app.use(function(req, res, next) {
     next();
 });
 
+// function that checks if the homepage starts with http, if not add it
+const checkUrl = function(url) {
+    if (
+        !url.startsWith("http://") &&
+        !url.startsWith("https://") &&
+        !url.startsWith("//")
+    ) {
+        url = "http://" + url;
+    }
+    return url;
+};
+
 // ******************************    ROUTES   **********************************
 // ***** HOME ROUTE *****
 app.get("/", (req, res) => {
@@ -268,17 +280,6 @@ app.post("/profile", (req, res) => {
     let homepage = req.body.url;
     let userID = req.session.user.id;
 
-    const checkUrl = function(url) {
-        if (
-            !url.startsWith("http://") &&
-            !url.startsWith("https://") &&
-            !url.startsWith("//")
-        ) {
-            url = "http://" + url;
-        }
-        return url;
-    };
-
     db.addProfile(age, city, checkUrl(homepage), userID)
         .then(results => {
             console.log("results in addProfile function: ", results.rows[0]);
@@ -342,7 +343,7 @@ app.post("/profile/edit", (req, res) => {
                 db.updateUserProfiles(
                     req.body.age,
                     req.body.city,
-                    req.body.url,
+                    checkUrl(req.body.url),
                     userID
                 )
             ])
@@ -357,9 +358,18 @@ app.post("/profile/edit", (req, res) => {
                     console.log("merged results with password: ", mergeResults);
                     res.redirect("/thank-you");
                 })
-                .catch(err =>
-                    console.log("catch err in promise.all with pass", err)
-                );
+                .catch(function(result) {
+                    res.render("edit", {
+                        // console.log("catch err in promise.all with pass", err)
+                        layout: "main",
+                        firstName: result.rows[0].firstname,
+                        lastName: result.rows[0].lastname,
+                        email: result.rows[0].email,
+                        age: result.rows[0].age || null,
+                        city: result.rows[0].city || null,
+                        homepage: result.rows[0].url || null
+                    });
+                });
         });
     } else {
         Promise.all([
@@ -372,7 +382,7 @@ app.post("/profile/edit", (req, res) => {
             db.updateUserProfiles(
                 req.body.age,
                 req.body.city,
-                req.body.url,
+                checkUrl(req.body.url),
                 userID
             )
         ])
