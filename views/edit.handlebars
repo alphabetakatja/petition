@@ -7,19 +7,19 @@
         <img src="https://p7.hiclipart.com/preview/285/877/92/jeff-bridges-the-big-lebowski-white-russian-youtube-dude-youtube.jpg" alt="The Dude logo">
     </div>
 
-    <div class="register-form_content">
-        <input class="register-form_input" type="text" name="first_name" placeholder="First Name" required>
-        <input class="register-form_input" type="text" name="last_name" placeholder="Last Name" required>
-        <input class="register-form_input" type="text" name="email" placeholder="E-mail Address" required minlength="6" maxlength="50">
-        <input class="register-form_input" type="password" name="password" placeholder="Password" required minlength="5" maxlength="15" pattern="[a-zA-Z0-9]+">
-        <input class="register-form_input" type="text" name="age" placeholder="Age">
-        <input class="register-form_input" type="text" name="city" placeholder="City">
-        <input class="register-form_input" type="text" name="url" placeholder="Homepage">
+    <div class="edit-form_content">
+        <input class="edit-form_input" value="" type="text" name="first_name" placeholder="First Name" required>
+        <input class="edit-form_input" value="" type="text" name="last_name" placeholder="Last Name" required>
+        <input class="edit-form_input" value="" type="text" name="email" placeholder="E-mail Address" required>
+        <input class="edit-form_input" value="" type="password" name="password" placeholder="Password" required pattern="[a-zA-Z0-9]+">
+        <input class="edit-form_input" value="" type="text" name="age" placeholder="Age">
+        <input class="edit-form_input" value="" type="text" name="city" placeholder="City">
+        <input class="edit-form_input" value="" type="text" name="url" placeholder="Homepage">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button class="register-form_btn" type="submit">Keep on Abiding</button>
+        <button class="edit-form_btn" type="submit">Update</button>
     </div>
 
-    <div class="register-form_footer">
+    <div class="edit-form_footer">
     </div>
 
 </form>

@@ -215,20 +215,23 @@ canvas {
 }
 
 .login-form_content,
-.register-form_content {
+.register-form_content,
+.edit-form_content {
     padding: 30px;
     /* background: #eaf5ff; */
 }
 
 .login-form_header,
-.register-form_header {
+.register-form_header,
+.edit-form_header {
     margin-bottom: 15px;
     text-align: center;
     color: #9b59b6;
 }
 
 .login-form_input,
-.register-form_input {
+.register-form_input,
+.edit-form_input {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
@@ -241,18 +244,21 @@ canvas {
 }
 
 .login-form_input:focus,
-.register-form_input:focus {
+.register-form_input:focus,
+.edit-form_input:focus {
     border-color: #64b2cd;
 }
 
 .login-form_input::placeholder,
-.register-form_input::placeholder {
+.register-form_input::placeholder,
+.edit-form_input::placeholder {
     /* color: #64b2cd; */
     color: #9b59b6;
 }
 
 .login-form_btn,
-.register-form_btn {
+.register-form_btn,
+.edit-form_btn {
     padding: 10px;
     color: white;
     font-weight: bold;
@@ -264,11 +270,13 @@ canvas {
     cursor: pointer;
 }
 .login-form_btn:hover,
-.register-form_btn:hover {
+.register-form_btn:hover,
+.edit-form_btn:hover {
     background: #64b2cd;
 }
 .login-form_btn:active,
-.register-form_btn:active {
+.register-form_btn:active,
+.edit-form_btn:active {
     background: #3c70a4;
 }
 .login-form_links,
