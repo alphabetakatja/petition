@@ -1,5 +1,8 @@
 var spicedPg = require("spiced-pg");
-var db = spicedPg("postgres:postgres:postgres@localhost:5432/hab-petition");
+var db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/hab-petition"
+);
 
 // ***** PETITION ROUTE *****
 module.exports.addSignature = function(signature, userID) {
