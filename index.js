@@ -331,6 +331,35 @@ app.post("/profile/edit", (req, res) => {
         hash(password).then(hashedPassword => {
             console.log("hash: ", hashedPassword);
             // do stuff here...
+            Promise.all([
+                db.updateUsersTableWithPass(
+                    req.body["first_name"],
+                    req.body["last_name"],
+                    req.body.email,
+                    hashedPassword,
+                    userID
+                ),
+                db.updateUserProfiles(
+                    req.body.age,
+                    req.body.city,
+                    req.body.url,
+                    userID
+                )
+            ])
+                .then(results => {
+                    console.log(
+                        "results if the user has updated the password: ",
+                        results.rows
+                    );
+                    let users = results[0];
+                    let userProfiles = results[1];
+                    let mergeResults = [...users, ...userProfiles];
+                    console.log("merged results with password: ", mergeResults);
+                    res.redirect("/thank-you");
+                })
+                .catch(err =>
+                    console.log("catch err in promise.all with pass", err)
+                );
         });
     } else {
         Promise.all([
@@ -349,16 +378,19 @@ app.post("/profile/edit", (req, res) => {
         ])
             .then(results => {
                 console.log(
-                    "results if the user hasn't update the password - promise all: ",
+                    "results if the user hasn't updated the password: ",
                     results.rows
                 );
                 let users = results[0];
                 let userProfiles = results[1];
                 console.log("users: ", users, "userProfiles: ", userProfiles);
                 let mergeResults = [...users, ...userProfiles];
-                console.log("merged results: ", mergeResults);
+                console.log("merged results without password: ", mergeResults);
+                res.redirect("/thank-you");
             })
-            .catch(err => console.log("catch err in promise.all", err));
+            .catch(err =>
+                console.log("catch err in promise.all without pass", err)
+            );
     }
 });
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
