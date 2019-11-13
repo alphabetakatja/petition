@@ -322,25 +322,43 @@ app.get("/profile/edit", (req, res) => {
 app.post("/profile/edit", (req, res) => {
     console.log("post route in edit profile: ", req.body);
     console.log("post route in edit profile cookie: ", req.session.user);
-    let firstName = req.body["first_name"];
-    let lastName = req.body["last_name"];
-    let email = req.body.email;
-    // let age = req.body.age;
-    // let city = req.body.city;
-    // let url = req.body.url;
+    let password = req.body.password;
     let userID = req.session.user.id;
-    if (req.body.password == "") {
-        db.updateProfileWithoutPass(firstName, lastName, email, userID)
+    console.log("before promise.all");
+
+    if (password != "") {
+        // if the user changed the password
+        hash(password).then(hashedPassword => {
+            console.log("hash: ", hashedPassword);
+            // do stuff here...
+        });
+    } else {
+        Promise.all([
+            db.updateUsersTableNoPass(
+                req.body["first_name"],
+                req.body["last_name"],
+                req.body.email,
+                userID
+            ),
+            db.updateUserProfilesNoPass(
+                req.body.age,
+                req.body.city,
+                req.body.url,
+                userID
+            )
+        ])
             .then(results => {
-                console.log("Profile updated without password: ", results.rows);
-            })
-            .catch(err => {
                 console.log(
-                    "There's an error in updateProfileWithoutPass: ",
-                    err
+                    "results if the user hasn't update the password - promise all: ",
+                    results.rows
                 );
-            });
+                let users = results[0];
+                let userProfiles = results[1];
+                console.log("users: ", users, "userProfiles: ", userProfiles);
+                let mergeResults = [...users, ...userProfiles];
+                console.log("merged results: ", mergeResults);
+            })
+            .catch(err => console.log("catch err in promise.all", err));
     }
 });
-
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
