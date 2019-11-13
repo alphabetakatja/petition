@@ -340,7 +340,7 @@ app.post("/profile/edit", (req, res) => {
                 req.body.email,
                 userID
             ),
-            db.updateUserProfilesNoPass(
+            db.updateUserProfiles(
                 req.body.age,
                 req.body.city,
                 req.body.url,

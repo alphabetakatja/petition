@@ -99,7 +99,20 @@ module.exports.editProfile = function(id) {
     );
 };
 
-module.exports.updateProfileWithoutPass = function(
+module.exports.updateUsersTableWithPass = function(
+    firstName,
+    lastName,
+    email,
+    password,
+    userID
+) {
+    return db.query(
+        `UPDATE users SET first_name=$1, last_name=$2, email=$3, password=$4 WHERE id=$5`,
+        [firstName, lastName, email, password, userID]
+    );
+};
+
+module.exports.updateUsersTableNoPass = function(
     firstName,
     lastName,
     email,
@@ -108,5 +121,17 @@ module.exports.updateProfileWithoutPass = function(
     return db.query(
         `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
         [firstName, lastName, email, userID]
+    );
+};
+
+module.exports.updateUserProfiles = function(age, city, homepage, userID) {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET age=$1, city=$2, url=$3`,
+        [
+            age ? Number(age) : null || null,
+            city || null,
+            homepage || null,
+            userID
+        ]
     );
 };
