@@ -13,7 +13,7 @@
     <h3>{{errMessage}}</h3>
     {{else}}
         <form class="sign-form" action="/petition" method="post">
-            <input class="hidden-field" type="hidden" name="hidden-field" value="signature">
+            <input class="hidden-field" type="hidden" name="hidden-field">
             <canvas id="signature-field" width="600" height="100"></canvas>
             <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
             <input type="hidden" name="_csrf" value="{{csrfToken}}">

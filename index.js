@@ -7,6 +7,14 @@ const cookieSession = require("cookie-session");
 const { hash, compare } = require("./utils/bc");
 // csurf -cross-site request forger
 const csurf = require("csurf");
+
+const {
+    requireLoggedOutUser,
+    requireNoSignature,
+    requireSignature,
+    requireLoggedInUser
+} = require("./middleware");
+
 // handlebars
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -36,12 +44,16 @@ app.use(function(req, res, next) {
     next();
 });
 
+// middleware function
+app.use(requireLoggedInUser);
+
 // function that checks if the homepage starts with http, if not add it
 const checkUrl = function(url) {
     if (
         !url.startsWith("http://") &&
         !url.startsWith("https://") &&
-        !url.startsWith("//")
+        !url.startsWith("//") &&
+        url != ""
     ) {
         url = "http://" + url;
     }
@@ -55,13 +67,13 @@ app.get("/", (req, res) => {
 });
 
 // ***** REGISTER ROUTE *****
-app.get("/register", (req, res) => {
+app.get("/register", requireLoggedOutUser, (req, res) => {
     res.render("register", {
         layout: "main"
     });
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", requireLoggedOutUser, (req, res) => {
     console.log("req body in /register: ", req.body);
     const firstName = req.body["first_name"];
     const lastName = req.body["last_name"];
@@ -106,17 +118,17 @@ app.post("/register", (req, res) => {
 });
 
 // ***** LOGIN ROUTE *****
-app.get("/login", (req, res) => {
-    if (req.session.user) {
-        res.redirect("/petition");
-        return;
-    }
+app.get("/login", requireLoggedOutUser, (req, res) => {
+    // if (req.session.user) {
+    //     res.redirect("/petition");
+    //     return;
+    // }
     res.render("login", {
         layout: "main"
     });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", requireLoggedOutUser, (req, res) => {
     console.log("req body in /login: ", req.body);
     const email = req.body.email;
     let password = req.body.password;
@@ -179,38 +191,43 @@ app.get("/logout", (req, res) => {
 });
 
 // ***** PETITION ROUTE *****
-app.get("/petition", (req, res) => {
+app.get("/petition", requireNoSignature, (req, res) => {
     res.render("petition", {
         layout: "main"
     });
 });
 
-app.post("/petition", (req, res) => {
+app.post("/petition", requireNoSignature, (req, res) => {
     console.log("i am doing a post request");
     console.log("req: ", req.body);
     let signature = req.body["hidden-field"];
     let userID = req.session.user.id;
-    if (signature != "") {
-        // don't add a signature if the user hasn't signed in
-        db.addSignature(signature, userID)
-            .then(results => {
-                // console.log(results);
-                req.session.user.sigId = results.rows[0].id;
-                res.redirect("/thank-you");
-            })
-            .catch(err => {
-                console.log("addSignature fn err: ", err);
-                res.render("petition", {
-                    errMessage:
-                        "Oooops something went wrong! Make sure you fill out the signature field!",
-                    layout: "main"
-                });
+    // if (signature != "") {
+    // don't add a signature if the user hasn't signed in
+    db.addSignature(signature, userID)
+        .then(results => {
+            // console.log(results);
+            req.session.user.sigId = results.rows[0].id;
+            res.redirect("/thank-you");
+        })
+        .catch(err => {
+            console.log("addSignature fn err: ", err);
+            res.render("petition", {
+                errMessage:
+                    "Oooops something went wrong! Make sure you fill out the signature field!",
+                layout: "main"
             });
-    }
+        });
+    // } else {
+    //     res.render("petition", {
+    //         noSignature: "Please make sure you fill out the signature field!",
+    //         layout: "main"
+    //     });
+    // }
 });
 
 // ***** THANK-YOU ROUTE *****
-app.get("/thank-you", (req, res) => {
+app.get("/thank-you", requireSignature, (req, res) => {
     console.log("/thank-you route: ", req.session);
     console.log("sigID is: ", req.session.user.sigId);
     let getSignaturePromise = db.getSignature(req.session.user.sigId);
@@ -242,6 +259,7 @@ app.get("/thank-you", (req, res) => {
 });
 
 app.post("/thank-you/delete", (req, res) => {
+    console.log("delete signature route: ", req.session);
     db.deleteSignature(req.session.user.id)
         .then(() => {
             req.session.user.sigId = null;
@@ -258,7 +276,7 @@ app.post("/thank-you/delete", (req, res) => {
 });
 
 // ***** SIGNERS-LIST ROUTE *****
-app.get("/signers-list", (req, res) => {
+app.get("/signers-list", requireSignature, (req, res) => {
     db.getSigners()
         .then(results => {
             console.log("getSigners results:", results.rows);
@@ -273,7 +291,7 @@ app.get("/signers-list", (req, res) => {
         });
 });
 
-app.get("/signers-list/:city", (req, res) => {
+app.get("/signers-list/:city", requireSignature, (req, res) => {
     const { city } = req.params;
     console.log(req.params.city);
     db.getSignersByCity(city).then(results => {

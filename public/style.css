@@ -97,6 +97,7 @@ canvas {
     width: 600px;
     height: 100px;
     /* background-color: rgb(197, 190, 190); */
+    opacity: 0.5;
     border: 2px solid #9b59b6;
     border-radius: 5px;
 }
