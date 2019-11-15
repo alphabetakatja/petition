@@ -11,8 +11,8 @@ const csurf = require("csurf");
 const {
     requireLoggedOutUser,
     requireNoSignature,
-    requireSignature,
-    requireLoggedInUser
+    requireSignature
+    // requireLoggedInUser
 } = require("./middleware");
 
 // handlebars
@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
 });
 
 // middleware function
-app.use(requireLoggedInUser);
+// app.use(requireLoggedInUser);
 
 // function that checks if the homepage starts with http, if not add it
 const checkUrl = function(url) {
@@ -62,8 +62,10 @@ const checkUrl = function(url) {
 
 // ******************************    ROUTES   **********************************
 // ***** HOME ROUTE *****
-app.get("/", (req, res) => {
-    res.redirect("/register");
+app.get("/", requireLoggedOutUser, (req, res) => {
+    res.render("home", {
+        layout: "main"
+    });
 });
 
 // ***** REGISTER ROUTE *****
@@ -156,7 +158,7 @@ app.post("/login", requireLoggedOutUser, (req, res) => {
                             //the user has signed petition!
                             res.redirect("/thank-you");
                         } else {
-                            res.redirect("/profile");
+                            res.redirect("/petition");
                         }
                     } else {
                         // if the passwords don't match
@@ -201,7 +203,9 @@ app.post("/petition", requireNoSignature, (req, res) => {
     console.log("i am doing a post request");
     console.log("req: ", req.body);
     let signature = req.body["hidden-field"];
+    // console.log("cookie in petition: ", req.session.user);
     let userID = req.session.user.id;
+    let firstName = req.session.user.firstName;
     // if (signature != "") {
     // don't add a signature if the user hasn't signed in
     db.addSignature(signature, userID)
@@ -213,9 +217,9 @@ app.post("/petition", requireNoSignature, (req, res) => {
         .catch(err => {
             console.log("addSignature fn err: ", err);
             res.render("petition", {
-                errMessage:
-                    "Oooops something went wrong! Make sure you fill out the signature field!",
-                layout: "main"
+                layout: "main",
+                firstName: firstName,
+                errMessage: "Make sure you fill out the signature field!"
             });
         });
     // } else {
@@ -246,6 +250,7 @@ app.get("/thank-you", requireSignature, (req, res) => {
             res.render("thankyou", {
                 layout: "main",
                 signature: signature,
+                firstName: req.body["first_name"],
                 numOfSigners: signedCount
             });
         })
@@ -428,4 +433,5 @@ app.post("/profile/edit", (req, res) => {
             );
     }
 });
+
 app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
