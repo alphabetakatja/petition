@@ -1,5 +1,6 @@
-<main>
+{{>navbar show=true}}
 
+<main>
     <div class="petition-container">
         <h1>Times like these call for a Big Lebowski!</h1>
         <div class="petition-text">
@@ -13,6 +14,15 @@
 
         {{#if errMessage}}
         <h3>{{errMessage}}</h3>
+        <form class="sign-form" action="/petition" method="post">
+            <input class="hidden-field" type="hidden" name="hidden-field">
+            <canvas id="signature-field" width="600" height="100"></canvas>
+            <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+            <button class="submit-btn" type="submit" name="button">Abide</button>
+
+        </form>
         {{else}}
         <form class="sign-form" action="/petition" method="post">
             <input class="hidden-field" type="hidden" name="hidden-field">
@@ -27,5 +37,5 @@
 
     </div>
 
-{{>signature}}
 </main>
+{{>signature}}
