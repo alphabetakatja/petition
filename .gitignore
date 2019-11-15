@@ -9,3 +9,4 @@ cities.sql
 petition-index.js
 editprofilepage.js
 profile.js
+redis.js
