@@ -167,17 +167,10 @@ canvas {
 }
 
 .thankyou-page h1 {
+    margin-top: 50px;
     color: #9b59b6;
     margin-bottom: 30px;
-    animation: scale-up-center 1s linear infinite alternate-reverse forwards;
-}
-@keyframes scale-up-center {
-    0% {
-        transform: scale(0.5);
-    }
-    100% {
-        transform: scale(10);
-    }
+    /* animation: scale-up-center 1s linear infinite alternate-reverse forwards; */
 }
 
 .thankyou-page a {
@@ -185,6 +178,9 @@ canvas {
     text-decoration: none;
 }
 
+#donny {
+    margin-bottom: 50px;
+}
 /*****   SIGNERS.HANDLEBARS FILE  *****/
 
 .signers-list {
@@ -244,16 +240,16 @@ canvas {
     height: 150px;
     border-radius: 50%;
     border: 2px solid #9b59b6;
-    animation: scale-up-center 1s linear infinite alternate-reverse forwards;
+    /* animation: scale-up-center 1s linear infinite alternate-reverse forwards; */
 }
-@keyframes scale-up-center {
+/* @keyframes scale-up-center {
     0% {
         transform: scale(0.5);
     }
     100% {
         transform: scale(1);
     }
-}
+} */
 
 .logo {
     vertical-align: middle;
@@ -267,7 +263,6 @@ canvas {
 .register-form_content,
 .edit-form_content {
     padding: 30px;
-    /* background: #eaf5ff; */
 }
 
 .login-form_header,
@@ -301,7 +296,6 @@ canvas {
 .login-form_input::placeholder,
 .register-form_input::placeholder,
 .edit-form_input::placeholder {
-    /* color: #64b2cd; */
     color: #9b59b6;
 }
 
@@ -344,7 +338,6 @@ canvas {
 .register-form_footer {
     text-align: center;
     padding: 10px;
-    /* background: #a9c6de; */
 }
 
 .sign-up_link,
@@ -391,8 +384,8 @@ h3 {
 
 #deleteSignature {
     border-color: transparent;
-
     color: #9b59b6;
+    font-size: 20px;
     background: transparent;
     margin-top: 20px;
 }

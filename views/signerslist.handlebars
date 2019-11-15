@@ -1,9 +1,15 @@
-<div class="signers-list">
-    <h3>We the undersigned demand that the Cohen Brothers start with filming a Big Lebowski sequel!</h1>
-        <ul>
-            {{#signers}}
-                    <li>{{firstname}} | {{lastname}} | {{age}} | <a href="/signers-list/{{city}}" target="_blank">{{city}}</a> | <a href="{{url}}" target="_blank">{{url}}</a></li>
-            {{/signers}}
-        </ul>
+{{>navbar show=true petition=true edit=true logout=true}}
 
-</div>
+
+<main>
+    <div class="signers-list">
+        <h3>We the undersigned demand that the Cohen Brothers start with filming a Big Lebowski sequel!</h1>
+            <ul>
+                {{#signers}}
+                <li>{{firstname}} | {{lastname}} | {{age}} | <a href="/signers-list/{{city}}" target="_blank">{{city}}</a> | <a href="{{url}}" target="_blank">{{url}}</a></li>
+                {{/signers}}
+            </ul>
+
+        </div>
+
+</main>

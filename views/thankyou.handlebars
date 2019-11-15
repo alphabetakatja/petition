@@ -1,21 +1,24 @@
-<div class="thankyou-page">
-    {{#if errMessage}}
-    <h3> {{errMessage}} </h3>
+{{>navbar show=true edit=true logout=true}}
 
-    {{else}}
-        <h1>Thank you for your signature!</h1>
-        <img src="{{signature}}" />
-        <br>
-        <a href="/signers-list" target="_blank">Check out the other {{numOfSigners}} dudes that abide</a>
-        <br>
-        <a href="/profile/edit">Edit your profile</a>
-        <br>
-        <a href="/logout">Log out</a>
+<main>
+    <div class="thankyou-page">
+        {{#if errMessage}}
+        <h3> {{errMessage}} </h3>
 
-        <form action="/thank-you/delete" method="post">
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <button id="deleteSignature">Delete signature</button>
-        </form>
+        {{else}}
+            <h1>Thank you for your signature!</h1>
+            <div class="logo-container" id="donny">
+                <img src="/donny.jpeg" alt="The Dude logo">
+            </div>
+            <img src="{{signature}}" />
+            <br>
+            <a href="/signers-list" target="_blank">Check out the other {{numOfSigners}} dudes that abide</a>
+            <br>
+            <form action="/thank-you/delete" method="post">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <button id="deleteSignature">Delete signature</button>
+            </form>
 
         {{/if}}
-</div>
+    </div>
+</main>

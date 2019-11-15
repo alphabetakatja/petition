@@ -206,7 +206,7 @@ app.post("/petition", requireNoSignature, (req, res) => {
     // console.log("cookie in petition: ", req.session.user);
     let userID = req.session.user.id;
     let firstName = req.session.user.firstName;
-    // if (signature != "") {
+
     // don't add a signature if the user hasn't signed in
     db.addSignature(signature, userID)
         .then(results => {
@@ -222,12 +222,6 @@ app.post("/petition", requireNoSignature, (req, res) => {
                 errMessage: "Make sure you fill out the signature field!"
             });
         });
-    // } else {
-    //     res.render("petition", {
-    //         noSignature: "Please make sure you fill out the signature field!",
-    //         layout: "main"
-    //     });
-    // }
 });
 
 // ***** THANK-YOU ROUTE *****
