@@ -24,12 +24,6 @@ body {
     color: #9b59b6;
 }
 
-footer p {
-    padding-top: 10px;
-    padding-left: 10px;
-    color: #9b59b6;
-}
-
 .row {
     max-width: 1140px;
     margin: 0 auto;
@@ -63,15 +57,10 @@ footer p {
     border-bottom: 2px solid #9b59b6;
 }
 
-.petition-container h3 {
-    font-weight: bold;
-}
-
-/***** HOME.HANDLEBARS FILE *****/
-#signUpBtn {
-    width: 200px;
-    heigth: 50px;
-    font-stretch: extra-expanded;
+footer p {
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #9b59b6;
 }
 
 /*****  PETITION.HANDLEBARS FILE  *****/
@@ -91,6 +80,10 @@ footer p {
 .petition-container p {
     color: #9b59b6;
     text-align: justify;
+}
+
+.petition-container h3 {
+    font-weight: bold;
 }
 
 .petition-text p {
@@ -156,6 +149,13 @@ canvas {
     outline: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/***** HOME.HANDLEBARS FILE *****/
+#signUpBtn {
+    width: 200px;
+    heigth: 50px;
+    font-stretch: extra-expanded;
 }
 
 /***** THANKYOU.HANDLEBARS FILE *****/
