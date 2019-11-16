@@ -3,11 +3,12 @@
         <nav>
             <div class="row">
                 <ul class="main-nav">
+                    {{#if home}}<li><a href="/">Home</a></li>{{/if}}​
                     {{#if petition}}<li><a href="/petition">Petition</a></li>{{/if}}
                     {{#if signerslist}}<li><a href="/signers-list">Signers</a></li>{{/if}}
-                    {{#if edit}}<li><a href="/profile/edit">Edit</a></li>{{/if}}
-                    {{#if register}}<li><a href="/register">Register</a></li>{{/if}}
+                    {{#if edit}}<li><a href="/profile/edit">Edit profile</a></li>{{/if}}
                     {{#if login}}<li><a href="/login">Login</a></li>{{/if}}​
+                    {{#if register}}<li><a href="/register">Register</a></li>{{/if}}
                     {{#if logout}}<li><a href="/logout">Logout</a></li>{{/if}}​
 
                 </ul>

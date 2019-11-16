@@ -15,7 +15,7 @@ body {
     grid-template-rows: 90px 1fr 20px;
     font-family: "Antic Slab", serif;
     background-color: #34314f;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
         url(thedude2.jpg_large);
     background-size: cover;
     background-position: center;
@@ -74,7 +74,8 @@ footer p {
 .petition-container h1 {
     color: #9b59b6;
     margin-bottom: 30px;
-    font-weight: 600;
+    font-weight: lighter;
+    font-size: 28px;
 }
 
 .petition-container p {
@@ -87,7 +88,7 @@ footer p {
 }
 
 .petition-text p {
-    font-size: 22px;
+    font-size: 20px;
     text-align: justify;
     width: 600px;
     margin-bottom: 35px;
@@ -98,6 +99,11 @@ footer p {
     font-size: 30px;
     font-weight: lighter;
     text-align: center;
+}
+
+.petition-text a {
+    text-decoration: none;
+    color: #9b59b6;
 }
 
 .sign-form {
@@ -123,18 +129,26 @@ footer p {
 canvas {
     border-radius: 5px;
     border: 2px solid #9b59b6;
-    background: white;
+    background: rgba(0, 0, 0, 0.4);
     outline: none;
     transition: border-color 0.5s;
     margin-bottom: 20px;
+}
+
+#petition_btn {
+    font-weight: lighter;
+}
+
+#petition_btn:hover {
+    background: #c2b0c9;
+    color: #9b59b6;
 }
 
 /* .hidden-field  */
 .thankyou-page img {
     width: 600px;
     height: 100px;
-    /* background-color: rgb(197, 190, 190); */
-    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.4);
     border: 2px solid #9b59b6;
     border-radius: 5px;
 }
@@ -170,7 +184,8 @@ canvas {
     margin-top: 50px;
     color: #9b59b6;
     margin-bottom: 30px;
-    /* animation: scale-up-center 1s linear infinite alternate-reverse forwards; */
+    font-weight: lighter;
+    font-size: 28px;
 }
 
 .thankyou-page a {
@@ -188,22 +203,21 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #ffd5d5;
+    color: #9b59b6;
 }
 .signers-list h3 {
-    font-size: 25px;
     margin-bottom: 50px;
     font-weight: lighter;
 }
 .signers-list li {
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 15px;
-    color: #ffd5d5;
+    color: #9b59b6;
 }
 
 .signers-list a {
     text-decoration: none;
-    color: #ffd5d5;
+    color: #9b59b6;
 }
 
 /*****   LOGIN & REGISTER FORM HANDLEBARS FILE  *****/
@@ -226,12 +240,14 @@ canvas {
     margin: 0 auto;
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 0 5px rgb(197, 190, 190);
+    box-shadow: 0 0 5px #9b59b6;
+    /* box-shadow: 0 0 5px rgb(197, 190, 190); */
 }
 
 .logo-container {
     text-align: center;
-    padding: 5px;
+    padding: 10px;
+    margin-top: 10px;
     /* background: #a9c6de; */
 }
 
@@ -239,24 +255,15 @@ canvas {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 2px solid #9b59b6;
-    /* animation: scale-up-center 1s linear infinite alternate-reverse forwards; */
+    border: 3px solid #9b59b6;
 }
-/* @keyframes scale-up-center {
-    0% {
-        transform: scale(0.5);
-    }
-    100% {
-        transform: scale(1);
-    }
-} */
 
 .logo {
     vertical-align: middle;
     display: block;
     max-width: 125px;
     margin: 0 auto;
-    border-radius: 50%;
+    /* border-radius: 50%; */
 }
 
 .login-form_content,
@@ -281,7 +288,8 @@ canvas {
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #9b59b6;
-    background: white;
+    background: rgba(0, 0, 0, 0.4);
+    color: #9b59b6;
     outline: none;
     transition: border-color 0.5s;
     cursor: text;
@@ -290,7 +298,8 @@ canvas {
 .login-form_input:focus,
 .register-form_input:focus,
 .edit-form_input:focus {
-    border-color: #64b2cd;
+    /* #64b2cd */
+    border-color: #c2b0c9;
 }
 
 .login-form_input::placeholder,
@@ -304,7 +313,8 @@ canvas {
 .edit-form_btn {
     padding: 10px;
     color: white;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: lighter;
     background: #9b59b6;
     width: 100%;
     border: none;
@@ -315,12 +325,14 @@ canvas {
 .login-form_btn:hover,
 .register-form_btn:hover,
 .edit-form_btn:hover {
-    background: #64b2cd;
+    background: #c2b0c9;
+    color: #9b59b6;
 }
 .login-form_btn:active,
 .register-form_btn:active,
 .edit-form_btn:active {
-    background: #3c70a4;
+    background: #c299fc;
+    color: white;
 }
 .login-form_links,
 .register-form_links {
@@ -350,7 +362,6 @@ canvas {
 /******  PROFILE.HANDLEBARS FILE  *****/
 .profile-title {
     left: 600px;
-    /* max-width: 400px; */
     text-align: center;
     margin-bottom: 50px;
     margin-top: 50px;
@@ -364,10 +375,10 @@ h3 {
 }
 
 /******  EDIT.HANDLEBARS FILE  *****/
-/* .profile-title h2 {
+.profile-title h2 {
     font-weight: lighter;
     text-transform: uppercase;
-} */
+}
 
 /******  LOGOUT.HANDLEBARS FILE  *****/
 .logout-message p {

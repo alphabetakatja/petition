@@ -1,14 +1,17 @@
-{{>navbar show=true}}
+{{>navbar show=true edit=true logout=true}}
 
 <main>
     <div class="petition-container">
-        <h1>Times like these call for a Big Lebowski!</h1>
         <div class="petition-text">
-            <p>If you wanna make the world a better place with just one signature you are on the right place!
-                All you need to do is fill out the fields below and sign this petition, which you can do single handedly while holding
-                a white russian in your other hand.
-                Help us collect enough signatures and bring the Dude, his Dudeness, Duder or el Duderino back to our lives and to the big screen!
+            <p>You're still not sure whether to sign the petition or not?! <br><br>
+                Well, we all know sequels are an eternally painful topic...<br><br>
+                But let me just remind you:<br>
+                <blockquote><em>Dudeism is a real religion that implores us all to 'just take it easy, man.' <br>
+                What could be more spiritual and uplifting than takin 'er easy?<br>
+                The Dude Abides, and so should all of us. At the Church of the Dude.</em></blockquote><br>
+                <a href="https://dudeism.com/?fbclid=IwAR110smSDidqOydJlLFkZMxJuuSxwHnaJNO9lP0eKbpQoszWFtBmSnQFlPw" target="_blank">—Dudeism</a>
             </p>
+            
             <h3>In Dude we Trust!</h3>
         </div>
 
@@ -30,7 +33,7 @@
             <!-- pass the token to the template, put this in every single form and make sure you pass the token here -->
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-            <button class="submit-btn" type="submit" name="button">Abide</button>
+            <button class="submit-btn" id="petition_btn" type="submit" name="button">Abide</button>
 
         </form>
         {{/if}}

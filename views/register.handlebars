@@ -1,4 +1,4 @@
-{{>navbar show=true login=true}}
+{{>navbar show=true home=true}}
 
 <main>
     {{#if errMessage}}
@@ -8,7 +8,9 @@
     {{else}}
         <form class="register-form" method="POST">
                 <div class="logo-container">
-                    <img src="https://p7.hiclipart.com/preview/285/877/92/jeff-bridges-the-big-lebowski-white-russian-youtube-dude-youtube.jpg" alt="The Dude logo">
+                    <!-- <img src="/thedude2.jpg" alt="The Dude logo"> -->
+
+                    <img src="thedude.jpg" alt="The Dude logo">
                 </div>
                 <div class="register-form_content">
                     <div class="register-form_header">Create your account:</div>
@@ -21,7 +23,7 @@
                 </div>
 
                 <div class="register-form_footer">
-                    <a class="log-in_link" href="/login" target="_blank">Already a nihilist? Log in!</a>
+                    <a class="log-in_link" href="/login">Already a nihilist? Log in!</a>
                 </div>
 
         </form>

@@ -4,7 +4,7 @@
     let c = canvas.getContext("2d");
     let canvasInput = document.querySelector(".hidden-field");
 
-    c.strokeStyle = "black";
+    c.strokeStyle = "#9b59b6";
     c.lineWidth = 2;
 
     let x;
