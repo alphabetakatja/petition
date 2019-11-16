@@ -406,3 +406,13 @@ h3 {
 #deletSignature:hover {
     border-bottom: 2px solid #9b59b6;
 }
+
+ion-icon {
+    color: white;
+    /* font-size: 150%; */
+    /* display: block; */
+    margin-top: 2px;
+    text-align: center;
+    padding-right: 5px;
+    /* padding-top: 30px; */
+}
